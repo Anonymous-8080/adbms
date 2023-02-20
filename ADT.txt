@@ -1,0 +1,111 @@
+ADT
+create type type_name As object
+(
+fname varchar(20),
+mname varchar(20),
+lname varchar(20)
+);
+/
+
+
+create type type_address As object
+(
+street varchar(20),
+city varchar(20),
+pincode number(10)
+);
+/
+
+
+create table customer1
+(
+ c_id number(5) primary key,
+ c_name type_name,
+ c_add type_address,
+ c_phno number(10)
+);
+
+insert into customer1
+values(1,type_name('varsha','s','atul'),
+type_address('Sainagar','Mumbai',400062),1289235405);  
+
+
+SELECT * FROM customer1;
+
+set describe depth 2;
+
+desc customer1;
+
+select * from customer1;
+
+
+
+//for Concat the name
+
+select c.c_name.fname||' '||c.c_name.mname||' '||c.c_name.lname from customer1 c;
+
+
+
+// for altering type which already exist 
+
+ alter type type_address
+ add attribute(name type_name)cascade;
+
+ create table cust2
+ (
+ cust_no integer,
+ adda type_address
+  );
+
+INSERT INTO cust2 VALUES
+(101,
+type_address('prabhadev','mumbai',400012,
+type_name('yashu','jay','patil'))
+);
+
+ select cust_no,c.adda.street,c.adda.name.fname from cust2 c;
+
+
+//for displaying specific record
+
+create or replace type book_type as object
+ (
+  book_id number(20),
+  book_name varchar(20));
+/
+
+create table Books of book_type;
+
+Table created.
+
+ insert into Books values(
+   101, 'it starts with us');
+
+SQL> desc Books;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ BOOK_ID                                            NUMBER(20)
+ BOOK_NAME                                          VARCHAR2(20)
+
+SQL> Select* from Books;
+
+   BOOK_ID BOOK_NAME
+---------- --------------------
+       101 it starts with us
+       102 it ends with us
+       103 Kite Runner
+
+SQL> Select Book_id from Books;
+
+   BOOK_ID
+----------
+       101
+       102
+       103
+
+SQL> Select* from Books b
+  2  where b.book_id='103';
+
+   BOOK_ID BOOK_NAME
+---------- --------------------
+       103 Kite Runner

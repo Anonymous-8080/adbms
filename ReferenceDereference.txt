@@ -1,0 +1,29 @@
+CREATE OR REPLACE TYPE animal_ty AS OBJECT
+(
+breed VARCHAR2(10),
+name VARCHAR2(10),
+birth_date DATE
+);
+/
+
+CREATE TABLE animal of animal_ty;
+
+INSERT INTO animal VALUES(animal_ty('mule','frances','01-apr-02'));
+
+INSERT INTO animal VALUES(animal_ty('dog','benji','03-aug-02'));
+
+SELECT REF(a) FROM animal a;
+
+CREATE TABLE keeper
+    (
+    keeper_name VARCHAR2(10),
+    animal_kept REF animal_ty
+    );
+
+DESCRIBE keeper;
+
+INSERT INTO keeper SELECT 'catherine',REF(a) FROM animal a WHERE name='benji';
+
+SELECT * FROM keeper;
+
+SELECT keeper_name,DEREF(k.animal_kept) FROM keeper k;

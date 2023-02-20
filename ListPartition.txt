@@ -1,0 +1,25 @@
+CREATE TABLE sales_list
+  2  (
+  3  salesman_id Number(5),
+  4  salesman_name  VARCHAR2(20),
+  5  sales_state VARCHAR2(30),
+  6  sales_amount Number(10),
+  7  sales_date DATE
+  8  )
+  9  PARTITION BY LIST(sales_state)
+ 10  (
+ 11    PARTITION sales_west VALUES('Andheri','Boriwali'),
+ 12    PARTITION sales_Harbur VALUES('Vashi','Chembur','Panvel'),
+ 13    PARTITION sales_central VALUES('Thane','Kalyan'),
+ 14    PARTITION sales_other VALUES(DEFAULT)
+ 15   )
+ 16  enable row movement;
+
+
+
+SELECT TABLE_NAME,PARTITION_NAME FROM USER_TAB_PARTITIONS WHERE TABLESPACE_NAME='USERS';
+
+SELECT *FROM sales_list PARTITION(sales_west);
+SELECT *FROM sales_list PARTITION(sales_central);
+SELECT *FROM sales_list PARTITION(sales_Harbur);
+SELECT *FROM sales_list PARTITION(sales_other);

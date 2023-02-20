@@ -1,0 +1,19 @@
+Create a table for hash partitioning
+
+CREATE TABLE sales1_hash
+(
+salesman_id Number(5),
+salesman_name  VARCHAR2(20),
+sales_amount Number(10),
+sales_no NUMBER(2)
+)
+PARTITION BY HASH(salesman_id)
+PARTITIONS 4;
+
+INSERT INTO order1  VALUES (1,'23-MAR-2000',101,12);
+
+SELECT TABLE_NAME,PARTITION_NAME FROM USER_TAB_PARTITIONS WHERE TABLESPACE_NAME='USERS';
+
+ SELECT * FROM sales1_hash PARTITION(SYS_P23);
+ SELECT * FROM sales1_hash PARTITION(SYS_P24);
+

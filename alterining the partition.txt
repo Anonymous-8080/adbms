@@ -1,0 +1,23 @@
+
+Altering the partition
+Eg.1 Alter table studpt
+split partition s_sz(‘U%’) 
+INTO (partition PA, partition PB); 
+
+Drop partition:
+Alter table studpt
+Drop partition PB;
+
+ADD Partition:
+Alter table studpt
+ADD partition S_WZ values less than(‘w%’) tablespace users;
+
+Renaming partition:
+ Alter table studpt ,rename partition S_WZ to S_ZW;
+
+Removing values from list partitioning:
+Delete from cust1 where city=’patana’;
+Alter table modify partition East Drop values(‘patana’);
+
+Merge partitions:
+Alter table studpt
